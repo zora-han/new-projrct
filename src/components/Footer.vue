@@ -1,12 +1,12 @@
 <template>
-    <p id='footer' class='footer'>Copyright {{company}} 版权所有&copy; {{time}}</p>
+    <p id='Mfooter' class='footer'>Copyright {{company}} 版权所有&copy; {{time}}</p>
 </template>
 
 <script>
 
 
 export default {
-  name: 'footer',
+  name: 'Mfooter',
   data(){
       return {
           company:'中新网络信息安全股份有限公司',

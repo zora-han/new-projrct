@@ -10,10 +10,6 @@
   ],
   "plugins": ["transform-vue-jsx", "transform-runtime"],
   "ignore": [
-    "./src/assets/js/jabase.js",
-    "./src/assets/js/webservice.js",
-    "./src/assets/js/sql.js",
-    "./src/assets/js/user.js",
-    "./src/assets/js/config.js",
+    "soap"
   ]
 }

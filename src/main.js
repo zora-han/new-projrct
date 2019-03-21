@@ -7,14 +7,7 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import './assets/font-icon/iconfont.css'
 
-// import $ from 'jquery'
-// import './assets/js/jbase'
-// import './assets/js/webservice'
-// import './assets/js/sql'
-// import './assets/js/config'
-// import './assets/js/user'
 
-var soap = require('soap');
 
 import App from './App'
 import Login from './components/Login'

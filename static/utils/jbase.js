@@ -943,7 +943,7 @@ if (!IS_IE) {
 //=============================================================================
 jetsennet.registerNamespace("jetsennet.xml");
 
-jetsennet.xml.prototype.xslEscape = function (text) {
+jetsennet.xml.xslEscape = function (text) {
     return text.toString().replace(/\}/ig, "&rdkh;")
 		.replace(/\{/ig, "&ldkh;");
 };

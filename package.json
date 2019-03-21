@@ -6,13 +6,15 @@
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
+    "devno": "webpack-dev-server --inline --progress ",
     "start": "npm run dev",
     "build": "node build/build.js"
   },
   "dependencies": {
+    "axios": "^0.18.0",
+    "easysoap": "^2.0.2",
     "element-ui": "^2.6.1",
     "jquery": "^1.9.1",
-    "soap": "^0.26.0",
     "vue": "^2.5.2",
     "vue-resource": "^1.5.1",
     "vue-router": "^3.0.2"

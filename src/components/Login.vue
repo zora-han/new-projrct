@@ -17,7 +17,7 @@
             </el-form-item>
 
             <div class='form-item'>
-              <el-button type="primary"  @click="submitForm('ruleForm')">立即登陆</el-button>
+              <el-button type="primary"  @click="pageInit()">立即登陆</el-button>
             </div>
           </el-form>
       </el-card>
@@ -27,10 +27,29 @@
 </template>
 
 <script>
-import LoginHeader from './loginHeader'
+import LoginHeader from './LoginHeader'
 import Footer from './Footer'
 import CodeSet from './plugin/CodeSet'
-
+var a = {
+        AreaId: "",
+        CheckinType: "",
+        ColumnId: "",
+        HomePath: "",
+        LoginId: "20161212",
+        LoginTime: "2016-12-12",
+        PageInfo: "",
+        PageTheme: "jsnet",
+        PersonId: "",
+        RightLevel: "0",
+        UserGroups: "0,12",
+        UserId: "0",
+        UserName: "20161212",
+        UserPath: "",
+        UserRoles: "1",
+        UserToken: "20161212",
+        UserType: "0"
+    };
+    jetsennet.setUserInfo(a);
 
 export default {
     name: 'login',
@@ -81,6 +100,26 @@ export default {
       },
       updateCode(code){
         this.identifyCode = code
+      },
+      pageInit(){
+        console.log("test");
+        var c = false;
+        var b = "../services/BMPLicenseService?wsdl";
+        var a = new jetsennet.Service(b);
+        console.log(a)
+        a.async = true;
+        a.displayLoading = false;
+        a.oncallback = function(d) {
+              //var e = jetsennet.xml.toObject(d.resultVal).Record;
+          alert(d.resultVal);
+        }
+        ;
+        a.onerror = function(d) {
+            alert("onerror");
+        }
+        ;
+        a.call("bmpCheckIsGetLicense", []);
+        // return c
       }
     },
     components: {
