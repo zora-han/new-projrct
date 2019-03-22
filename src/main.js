@@ -7,29 +7,40 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import './assets/font-icon/iconfont.css'
 
-
-
 import App from './App'
 import Login from './components/Login'
+import ErrorPage from './components/ErrorPage'
 
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
+
 Vue.use(VueRouter);
 Vue.use(VueResource);
 Vue.use(ElementUI);
-Vue.use(Login);
 
-// Vue.use($);
-// Vue.use(Jetsennet);
+Vue.use(Login);
+Vue.use(ErrorPage);
+
 
 const router = new VueRouter({
+  base:'/secops/nsoc/',
   routes:[
     {
       path:'/',
+      name:'home',
       component:Login
+    },
+    {
+      path:'/Login',
+      name:'login',
+      component:Login
+    },
+    { 
+      path: '*', 
+      component: ErrorPage 
     }
   ],
-  mode:"hash"
+  mode:"history"
 })
 
 new Vue({

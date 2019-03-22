@@ -20,7 +20,34 @@ html,body,.app{
     background-size: 100% 100%;
     background-image: url(../images/login-bg.jpg);
 }
-
 .form-item .el-input__inner{
-    background-color: #0A162B
+    background-color: #0A162B;
+    border-color:#3161A2;
 }
+.login_header{
+    text-align: right
+}
+.login_header li{
+    display: inline-block;
+    width: 70px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.login-contain .el-button{
+    background-color: #3161A2;
+    border-color: #3161A2;
+    width: 200px;
+    margin: 0 auto;
+    display: block;
+}
+.login-contain .license-button{
+    position: absolute;
+    left: 20px;
+    bottom: 45px;
+    width: 130px;
+}
+
+.box-card .el-card__header{
+    border-bottom-color: #3161A2
+  }

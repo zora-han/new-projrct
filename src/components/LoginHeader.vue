@@ -30,16 +30,6 @@ export default {
 <style scoped>
     .el-header{
         color:#909399;
-        background-color: rgba(204,204,204,.3);
         padding-top: 7px;
-    }
-    .login_header{
-        text-align: right
-    }
-    .login_header li{
-        display: inline-block;
-        width: 70px;
-        text-align: center;
-        cursor: pointer;
     }
 </style>

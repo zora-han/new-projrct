@@ -3,7 +3,7 @@
       <app-header></app-header>
 
       <el-card class="box-card center">
-        <div slot="header" class="box-card-title">{{title}}</div>
+        <div slot="header" class="box-card-title"><span class='icons my-icon-net'></span>{{title}}</div>
         <el-form :rules="rules" :model="ruleForm" ref="ruleForm">
             <el-form-item class='form-item' prop="name">
               <el-input type="text" placeholder="请输入账户" prefix-icon='icons my-icon-yonghu'  v-model="ruleForm.name"></el-input>
@@ -22,6 +22,8 @@
           </el-form>
       </el-card>
 
+      <el-button type="primary" class="license-button" @click="openLicenseWin()" ref="license" v-if="showBtn">导入授权文件</el-button>
+
       <app-footer></app-footer>
   </div>
 </template>
@@ -30,26 +32,6 @@
 import LoginHeader from './LoginHeader'
 import Footer from './Footer'
 import CodeSet from './plugin/CodeSet'
-var a = {
-        AreaId: "",
-        CheckinType: "",
-        ColumnId: "",
-        HomePath: "",
-        LoginId: "20161212",
-        LoginTime: "2016-12-12",
-        PageInfo: "",
-        PageTheme: "jsnet",
-        PersonId: "",
-        RightLevel: "0",
-        UserGroups: "0,12",
-        UserId: "0",
-        UserName: "20161212",
-        UserPath: "",
-        UserRoles: "1",
-        UserToken: "20161212",
-        UserType: "0"
-    };
-    jetsennet.setUserInfo(a);
 
 export default {
     name: 'login',
@@ -63,8 +45,10 @@ export default {
       };
 
       return {
+        licenseFlag:false,
         pass: '',
-          checkPass: '',
+        showBtn:false,
+        checkPass: '',
         title:"网络空间态势感知",
         loginBg:require('../assets/images/login-bg.jpg'),
         identifyCode:'',
@@ -101,6 +85,23 @@ export default {
       updateCode(code){
         this.identifyCode = code
       },
+      openTip(msg,flag) {
+        let h = this.$createElement;
+        let typeNotify = 'success';
+        let colorNotify = '#67C23A';
+        let titleNotify = '成功';
+        if(!flag){
+          typeNotify = 'error';
+          colorNotify = '#F56C6C';
+          titleNotify = '失败';
+        }
+
+        this.$notify({
+          title: titleNotify,
+          message: h('i', { style: 'color: '+ colorNotify}, msg),
+          type: typeNotify
+        });
+      },
       pageInit(){
         console.log("test");
         var c = false;
@@ -120,13 +121,70 @@ export default {
         ;
         a.call("bmpCheckIsGetLicense", []);
         // return c
+      },
+      // 打开授权导入页面
+      openLicenseWin() {
+          var pathName = window.document.location.pathname;
+          var projectName = pathName.substring(0, pathName.substr(1).indexOf('/') + 1);
+          var href = projectName + "/jbmp/jbmpsystemweb/impower.htm";
+          window.open(href, 'newwindow', 'height=720,width=964,top=0,left=0,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no');
+      },
+      // 授权验证
+      license() {
+          var thisI = this;
+          var BMP_LICENSE_SERVICE = jetsennet.appPath + "../services/BMPLicenseService?wsdl";
+          var ws = new jetsennet.Service(BMP_LICENSE_SERVICE);
+          ws.async = false;
+          ws.oncallback = function (ret) {
+              var o = jetsennet.xml.toObject(ret.resultVal).Record;
+              if (o.license == "false") {
+                if(thisI.licenseFlag){
+                  thisI.openTip(o.msg,false);
+                }else{
+                  thisI.licenseFlag = true
+                }
+                  thisI.showBtn = true;
+              } else {
+                thisI.openTip(o.msg,true);
+                thisI.showBtn = true;
+              }
+          }
+          ws.onerror = function (ex) {
+              $("#errorInfo").html(ex).show();
+          };
+          ws.call("bmpCheckIsGetLicense", []);
       }
     },
     components: {
       'app-header':LoginHeader,
       'app-footer':Footer,
       'code-set':CodeSet
-    }
+    },
+    created:function(){
+      var userInfo = {
+          AreaId: "",
+          CheckinType: "",
+          ColumnId: "",
+          HomePath: "",
+          LoginId: "20161212",
+          LoginTime: "2016-12-12",
+          PageInfo: "",
+          PageTheme: "jsnet",
+          PersonId: "",
+          RightLevel: "0",
+          UserGroups: "0,12",
+          UserId: "0",
+          UserName: "20161212",
+          UserPath: "",
+          UserRoles: "1",
+          UserToken: "20161212",
+          UserType: "0"
+      }
+      jetsennet.setUserInfo(userInfo);
+    },
+    mounted:function(){
+      this.license()
+  },
   }
 </script>
 
@@ -141,25 +199,17 @@ export default {
   .box-card-title{
     text-align: center; 
     font-size: 24px;
-    font-weight: bold;
     color: #3161A2;
   }
 
-  .el-button{
-    background-color: #3161A2;
-    border-color: #3161A2;
-    width: 200px;
-    margin: 0 auto;
-    display: block;
+  .box-card-title span{
+    font-size: 20px;
+    margin-right: 5px;
   }
 
   .input-code{
     width: 140px;
     display: inline-block
-  }
-
-  .form-item .el-input__inner{
-    background-color: #0A162B
   }
   
 </style>
